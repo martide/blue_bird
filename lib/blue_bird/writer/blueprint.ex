@@ -158,7 +158,10 @@ defmodule BlueBird.Writer.Blueprint do
     [
       "+ Response #{response.status}#{get_content_type(response.headers)}\n",
       response.headers |> filter_headers() |> print_headers() |> indent(4),
-      response.body |> print_body() |> indent(4)
+      response.body
+      |> Jason.Formatter.pretty_print()
+      |> print_body()
+      |> indent(4)
     ]
     |> Enum.reject(&(&1 == ""))
     |> Enum.join("\n")
@@ -374,7 +377,9 @@ defmodule BlueBird.Writer.Blueprint do
 
   @spec print_body_params(map) :: String.t()
   defp print_body_params(body) when body == %{}, do: ""
-  defp print_body_params(body), do: body |> Jason.encode!() |> print_body()
+
+  defp print_body_params(body),
+    do: body |> Jason.encode!(pretty: true) |> print_body()
 
   @spec indent(String.t(), integer) :: String.t()
   defp indent(str, count) do
