@@ -56,7 +56,7 @@ defmodule BlueBird.Mixfile do
       {:dialyxir, "~> 1.0.0-rc.4", only: [:dev], runtime: false},
 
       # Coverage
-      {:excoveralls, "~> 0.10.4", only: [:test]},
+      {:excoveralls, "~> 0.12.3", only: [:test]},
 
       # Docs
       {:ex_doc, ">= 0.16.4", only: :dev},
